@@ -1,25 +1,30 @@
+/*
 package main
 
 import (
+
 	"fmt"
 	"net/http"
 
 	"github.com/a-h/templ"
+
 )
 
-type Data struct {
-	message string
-}
-templ (d Data) Method() {
-	<div>{d.message}</div>
-}
-templ Message(){
-	<div>
-	@Data{
-		message:"you can implement method"
-	}.Method()
-	</div>
-}
+	type Data struct {
+		message string
+	}
+
+	templ (d Data) Method() {
+		<div>{d.message}</div>
+	}
+
+	templ Message(){
+		<div>
+		@Data{
+			message:"you can implement method"
+		}.Method()
+		</div>
+	}
 
 func main() {
 //	component := hello("John")
@@ -28,4 +33,18 @@ func main() {
 //	http.ListenAndServe(":3000", nil)
 Message().Render(context.Background(), os.Stdout)
 }
+}
+*/
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	handlerfunc := http.HandleFunc("/",func(rw http.ResponseWriter, r *http.Request) {
+		fmt.Println(rw, "hello "),
+	}
+	 err := http.ListenAndServe(":3000", handlerfunc)
 }

@@ -16,14 +16,9 @@ func main() {
 	}
 	router := chi.NewMux()
 	// test the router
-	router.Get("/foo", handleFoo)
+	router.Get("/foo", handler.handleFoo)
 	listenAddr := os.Getenv("LISTEN_ADDR")
 	slog.Info("HTTP server started", "listeAddr", listenAddr)
 	http.ListenAndServe(listenAddr, router)
-
-}
-
-func handleFoo(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("foo"))
 
 }

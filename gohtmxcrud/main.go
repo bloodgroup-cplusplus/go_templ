@@ -56,9 +56,26 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 func handleListItems( w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/items-list.html"))
 	tmpl.Execute(w,items)
+}
 
+//handle create Items 
 
-
-
-
-
+func handleCreateItem(w http.ResponseWriter, r *http.Request ) {
+	r.ParseMultiPartForm(10 <<20) // 10 mb max
+	name := r.FromValue("name")
+	description := r.FormValue("description")
+	id := fmt.Sprintf("%d",len(items)+1)
+	// handle image file upload 
+	file,handler, err := r.FormFile("image")
+	var  imagePath string
+	if err == nil {
+		defer file.Close()
+		filename := filepath.join("uploads",handler.filename)
+		f, err := os.OpenFile(filename,os.O_WRONLY|os.O_CREATE,0666)
+		if err == nil {
+			defer f.close()
+			io.Copy(f,file)
+			imagePath = "/uploads/" + handler.Filename
+		}
+	}
+}

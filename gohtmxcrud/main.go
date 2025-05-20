@@ -1,7 +1,10 @@
 package main
 
 
-import "github.com/go-chi/chi/v5"
+import (
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/middleware"
+)
 
 type Item struct {
 	ID string
@@ -19,7 +22,10 @@ func main() {
 
 // we need a chi router
 
-	r := 
+// Middleware setup
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+
 
 
 

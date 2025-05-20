@@ -1,9 +1,8 @@
 package main
-
-
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
 	"net/http"
 	"os"
 	"fmt"
@@ -31,24 +30,33 @@ func main() {
 	r.Use(middleware.Logger)
 	// middleware for cors
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:[]string,
+		AllowedOrigins: []string{},
 		AllowedMethods:[]string{"GET","POST","PUT","DELETE","OPTIONS"},
 	}))
 	// create uploads dirctory for storing images
+	// Route definiteis
 	os.MkdirAll("uploads",os.ModePerm)
-	r.Handle("/uploads/*",http.StripPrefix("/uploads",http.FileServer
-	((http.Dir("uploads")))))
-	// Route definitions
-	// 1 GET server the main/home page
-	// 2 GET Return list of items
-	// 3 POST Create a new item
-	// 4 DELTE delte an item with an ID
-	// Start the server 
+	r.Handle("/uploads/*",http.StripPrefix("/uploads",http.FileServer((http.Dir("uploads")))))
+	r.Get("/",handleIndex)
+	r.Get("/items",handleListItems)
 	fmt.Println("Server starting on http: locahost:300")
 	log.Fatal(http.ListenAndServe(":3000",r))
 
 }
 		
+
+
+//handleindex function to serve the main page of the applciation
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	tmpl : template.Must(template.ParseFiles("templates/index.html"))
+	tmpl.Execute(w,items)
+}
+
+// handleList Items
+func handleListItems( w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/items-list.html"))
+	tmpl.Execute(w,items)
+
 
 
 

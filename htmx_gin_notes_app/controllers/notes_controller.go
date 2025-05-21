@@ -10,7 +10,7 @@ func NotesIndex( c * gin.Context) {
 	notes :=[] models.Note {
 	{
 		Name: "Bug squashing",
-		Content:"chad"
+		Content:"chad",
 	},
 	{
 		Name:"chad",
@@ -19,7 +19,7 @@ func NotesIndex( c * gin.Context) {
 	{
 		Name: "Chad",
 		Content: "chad",
-	}
+	},
 	}
 
 	c.HTML (
@@ -39,5 +39,12 @@ type FormData struct {
 func NotesCreate(c *gin.Context) {
 	var data FormData
 	c.Bind(&data)
+	c.HTML(http.StatusAccepted,
+	"notes/note.html",
+	gin.H{
+		"Name":data.Name,
+		"content":data.Content,
+		})
+
 }
 

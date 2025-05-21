@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"go_htmx/models"
+	"github.com/bloodgroup-cplusplus/go_templ/htmx_gin_notes_app/models"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
@@ -31,4 +31,13 @@ func NotesIndex( c * gin.Context) {
 	)
 }
 
+type FormData struct {
+	Name string `form:"name"`
+	Content string `form:"content"`
+}
+
+func NotesCreate(c *gin.Context) {
+	var data FormData
+	c.Bind(&data)
+}
 

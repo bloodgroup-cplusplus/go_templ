@@ -8,6 +8,8 @@
 	<body>
 		<h1> Go + HTMX Demo </h1>
 		<h2> {{.Message}}</h2>
+		<button hx-get="/time" hx-target="#time">Get Current Time</button>
+		<h2 id="time">Shows current time</h2>
 	</body>
 </html>
 

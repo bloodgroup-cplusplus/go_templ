@@ -22,3 +22,12 @@ func home (w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w,"home.html")
 }
 
+func renderTemplate(w http.ResponseWriter, tmpl string) ( {
+	// Parsing the specified template file being passed as input
+	t, err := template.ParseFiles("templates/"+tmpl)
+	if err != nil {
+		http.Error(w,err.Error(),http.StatusInternalServerError)
+	}
+	t.Execute(w,nil)
+}
+
